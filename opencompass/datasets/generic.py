@@ -58,7 +58,16 @@ def get_final_results(judged_answers,
     return result
 
 
-def _generic_llmjudge_postprocess(judgement: str):
+def _generic_llmjudge_postprocess(judgement: str, think_start_token: str,
+                                  think_end_token: str):
+
+    if think_start_token not in judgement and think_end_token in judgement:
+        judgement = judgement.split(think_end_token)[-1].strip()
+    else:
+        reasoning_regex = re.compile(
+            rf'{think_start_token}(.*?){think_end_token}', re.DOTALL)
+        judgement = reasoning_regex.sub('', judgement).strip()
+
     match = re.search(r'(A|B)', judgement)
     grade_letter = (match.group(0) if match else 'unknown'
                     )  # Return 'unknown' if no match
@@ -69,13 +78,18 @@ def _generic_llmjudge_postprocess(judgement: str):
 def generic_llmjudge_postprocess(
     output: dict,
     output_path: str,
+    think_start_token: str = '<think>',
+    think_end_token: str = '</think>',
 ) -> dict:
     judged_answers = []
     origial_responses = []
     references = []
     for k, v in output.items():
         origial_responses.append(v['prediction'])
-        processed_judge = _generic_llmjudge_postprocess(v['prediction'])
+        processed_judge = _generic_llmjudge_postprocess(
+            v['prediction'],
+            think_start_token=think_start_token,
+            think_end_token=think_end_token)
         if processed_judge is not None:
             judged_answers.append(processed_judge)
             try:
@@ -93,6 +107,8 @@ def generic_llmjudge_postprocess(
 def generic_llmjudge_academic_postprocess(
     output: dict,
     output_path: str,
+    think_start_token: str = '<think>',
+    think_end_token: str = '</think>',
     metric_name: str = 'accuracy',
 ) -> dict:
     judged_answers = []
@@ -100,7 +116,10 @@ def generic_llmjudge_academic_postprocess(
     references = []
     for k, v in output.items():
         origial_responses.append(v['prediction'])
-        processed_judge = _generic_llmjudge_postprocess(v['prediction'])
+        processed_judge = _generic_llmjudge_postprocess(
+            v['prediction'],
+            think_start_token=think_start_token,
+            think_end_token=think_end_token)
         if processed_judge is not None:
             judged_answers.append(processed_judge)
             references.append(v['gold'])
