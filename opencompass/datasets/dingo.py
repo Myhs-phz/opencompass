@@ -105,8 +105,7 @@ class DingoEvaluator(BaseEvaluator):
         """
         eval_path = os.environ.get(
             'DINGO_EVAL_PATH',
-            '/mnt/shared-storage-user/auto-eval-pipeline/opencompass/'
-            'llmeval/compass_data_cache/dingo')
+            '')
         model_path = os.path.abspath(os.path.join(eval_path, 'lid.176.bin'))
         if not os.path.isfile(model_path):
             return
