@@ -33,7 +33,7 @@ env:
   KUBEBRAIN_CLUSTER_ENTRY: https://h.pjlab.org.cn
   # Must match rjob --namespace below (used by submit/get/logs/stop).
   KUBEBRAIN_NAMESPACE: ailab-llmeval
-  SCORE_MIN: '70'
+  SCORE_MIN: '75'
   SCORE_MAX: '85'
 
 jobs:
