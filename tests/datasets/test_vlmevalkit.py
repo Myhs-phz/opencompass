@@ -193,7 +193,7 @@ class TestVLMEvalKitDataset(unittest.TestCase):
         self.assertEqual(config.models[0]['path'], 'kimi-k2.6')
         self.assertEqual(config.models[0]['key'], 'ENV')
         self.assertEqual(config.models[0]['openai_api_base'],
-                         'https://token.pjlab.org.cn/v1')
+                         'https://example.com/v1')
         self.assertEqual(config.models[0]['max_out_len'], 32768)
         self.assertEqual(config.models[0]['batch_size'], 64)
         self.assertEqual(config.models[0]['max_workers'], 4)
@@ -204,7 +204,7 @@ class TestVLMEvalKitDataset(unittest.TestCase):
         self.assertEqual(
             judge,
             dict(model='kimi-k2.6',
-                 api_base='https://token.pjlab.org.cn/v1/chat/completions',
+                 api_base='https://example.com/v1/chat/completions',
                  nproc=4,
                  retry=3,
                  timeout=600,
