@@ -49,6 +49,7 @@ from .codecompass import *  # noqa: F401, F403
 from .commonsenseqa import *  # noqa: F401, F403
 from .commonsenseqa_cn import *  # noqa: F401, F403
 from .copa import *  # noqa: F401, F403
+from .critpt import *  # noqa: F401, F403
 from .crowspairs import *  # noqa: F401, F403
 from .crowspairs_cn import *  # noqa: F401, F403
 from .cruxeval import *  # noqa: F401, F403
