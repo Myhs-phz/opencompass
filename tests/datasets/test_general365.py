@@ -83,12 +83,12 @@ def test_general365_config_uses_rawprompt_and_requested_evaluators():
 
 def test_general365_summary_group_uses_sample_count_weights():
     config = Config.fromfile(
-        'opencompass/configs/summarizers/general365.py')
-    group = config.summarizer.summary_groups[0]
+        'opencompass/configs/summarizers/groups/General365.py')
+    group = config.general365_summary_groups[0]
 
     assert group.name == 'General365'
     assert group.weights == {
-        'General365-math': 484,
+        'General365-mathverify': 484,
         'General365-text': 236,
     }
 
@@ -97,7 +97,7 @@ def test_general365_summary_group_uses_sample_count_weights():
     summarizer.model_abbrs = ['test-model']
     raw_results = {
         'test-model': {
-            'General365-math': {
+            'General365-mathverify': {
                 'accuracy': 75.0
             },
             'General365-text': {
@@ -107,7 +107,7 @@ def test_general365_summary_group_uses_sample_count_weights():
     }
     parsed_results = {
         'test-model': {
-            'General365-math': {
+            'General365-mathverify': {
                 'accuracy': 75.0
             },
             'General365-text': {
@@ -116,11 +116,11 @@ def test_general365_summary_group_uses_sample_count_weights():
         }
     }
     dataset_metrics = {
-        'General365-math': ['accuracy'],
+        'General365-mathverify': ['accuracy'],
         'General365-text': ['accuracy'],
     }
     dataset_eval_mode = {
-        'General365-math': 'gen',
+        'General365-mathverify': 'gen',
         'General365-text': 'gen',
     }
 
